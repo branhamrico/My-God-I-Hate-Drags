@@ -1,20 +1,35 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
+  <div class="main">
+    <input type="text" [(ngModel)]="search" placeholder="Search" value="Silicea Belladonna Special Order">
+    <button type="button" (click)="searchNow($event)">Search</button>
+    <button type="button" (click)="resetSearchNow($event)">Reset</button><br/>
+    <select [(ngModel)]="filter" (change)="searchNow($event)" placeholder="filter">
+      <option value=""></option>
+      <option *ngFor="let o of filterFields" value="{{o}}">{{o}}</option>
+    </select>
+    <div
+      class="search-results"
+      infiniteScroll
+      [infiniteScrollDistance]="0"
+      [infiniteScrollThrottle]="2000"
+      (scrolled)="onScroll($event)">
+      <div class="grid-container">
+        <div class="grid-item" *ngFor="let d of dataNotSearch">
+          <div class="product_name">{{d.openfda.generic_name}}</div>
+          <div>{{d.openfda.brand_name}}</div>
+          <div>{{d.openfda.product_type}}</div>
+          <div class="text-smaller">{{d.dosage_and_administration}}</div>
+          <div class="text-smaller">{{d.purpose}}</div>
+          <div class="text-smaller">{{d.indications_and_usage}}</div>
+          <div class="product_warning">{{d.warnings}}</div>
+          <div class="text-smaller">{{d.active_ingredient}}</div>
+          <div class="text-smaller">{{d.inactive_ingredient}}</div>
+          <div class="text-smaller">{{d.storage_and_handling}}</div>
+        </div>
+      </div>
+    </div>
+    <div>{{errorMessage}}</div>
+    <div class="text-center" *ngIf="loading || scrollLoading">
+        Loading...
+    </div>
+    <div *ngIf="completed">No more products to display</div>
+  </div>
