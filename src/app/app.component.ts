@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   public dataNotSearch = [];
   public toShow = [];
   public completed = false;
-  public search = 'Silicea Belladonna Special Order';
+  public search = '';
   public onSearch;
   public filter;
   public filterFields = ['oral',
